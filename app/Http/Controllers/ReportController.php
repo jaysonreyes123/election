@@ -101,6 +101,7 @@ class ReportController extends Controller
         $report_model = DB::select($report_query);
         return $report_model;
     }
+
     public function get_fields($module)
     {
         $fields = FieldHelper::getfieldModule($module);

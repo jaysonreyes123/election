@@ -58,6 +58,26 @@
                         <div class="form-text text-danger" id="column_validation"></div>
                     </div>
 
+                    <div class="form-group mb-2">
+                        <label for="">All condition met</label>
+                        <div class="row">
+                            <div class="col-3">
+                                <select name="" id="and-select" class="form-select and-select">
+                                    <option value="">Select an Option</option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <input class="form-control" type="text" name="" id="">
+                            </div>
+                            <div class="col-3">
+                                <input class="form-control" type="text" name="" id="">
+                            </div>
+                            <div class="col-3"></div>
+                        </div>
+                        <div id="and_content"></div>
+                        <a  id="and_add_condition_btn" class="btn btn-sm btn-secondary mt-2" >Add Condition</a>
+                    </div>
+
                     
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
@@ -73,6 +93,7 @@
 @push('script')
     <script>
         var table;
+        var select_fields;
         $(function(){
             
             $(".select2").select2({
@@ -158,9 +179,13 @@
 
         $("#module-select").change(function(){
             get_fields();
+            $("#and_content").html("")
+            
         })
         function get_fields(){
             $("#column-select").empty();
+            $("#and-select").empty();
+            select_fields = "<option value=''>Select an Option</option>";
             var id = $("#module-select").val();
             if(id != ""){
                 $("#loader").show();
@@ -168,9 +193,10 @@
                     $("#loader").hide();
                     data.map((item,index)=>{
                         const option = new Option(item.label,item.columnname);
+                        select_fields+="<option value="+item.columnname+">"+item.label+"</option>";
                         $("#column-select").append(option)
                     })
-                    
+                    $("#and-select").html(select_fields);
                 })
             }
         }
@@ -180,6 +206,33 @@
             $("#module-select").val("").trigger('change');
             $("#id").val("");
         })
+
+        $("#and_add_condition_btn").click(function(){
+            $("#and_content").append(`
+                <div class="row mt-2">
+                    <div class="col">
+                       <select class="form-select and-select">
+                            <option value="">Select an Option</option>
+                            ${select_fields}
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input type = "text" class="form-control">
+                    </div>
+                    <div class="col">
+                        <input type = "text" class="form-control">
+                    </div>
+                    <div class="col d-flex align-items-center">
+                        <a style="cursor:pointer" class="text-danger remove_and_condition_btn"><span class="bi bi-trash"></span></a>
+                    </div>
+                </div>
+            `);
+
+            $(".remove_and_condition_btn").click(function(){
+                $(this).closest('.row').remove();
+            })
+        })
+        
     </script>
 @endpush
 @endsection
