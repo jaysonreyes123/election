@@ -109,7 +109,7 @@
                 <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">CSJDM</h5>
-                    <iframe src="http://localhost/qgis/#12/14.8184/121.0940" width="100%" height="500" frameborder="0"></iframe>
+                    <iframe src="{{ env('QGIS_URL') }}" width="100%" height="500" frameborder="0"></iframe>
                   </div>
                 </div>
               </div>
