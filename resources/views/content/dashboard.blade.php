@@ -51,7 +51,7 @@
                       <i class="bi bi-person-check-fill"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>{{\App\Helper\SqlHelper::get_count('yes')}}</h6>
+                      <h6>{{\App\Models\Voters::where('vote',1)->count()}}</h6>
                     </div>
                   </div>
                 </div>
@@ -67,7 +67,7 @@
                       <i class="bi bi-person-x-fill"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>{{\App\Helper\SqlHelper::get_count('no')}}</h6>
+                      <h6>{{\App\Models\Voters::where('vote',0)->count()}}</h6>
                     </div>
                   </div>
                 </div>
@@ -83,7 +83,7 @@
                       <i class="bi bi-people-fill"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>{{\App\Helper\SqlHelper::get_count()}}</h6>
+                      <h6>{{\App\Models\Voters::count()}}</h6>
                     </div>
                   </div>
                 </div>
@@ -99,7 +99,7 @@
                       <i class="bi bi-building"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>{{\App\Helper\SqlHelper::get_count('precinct')}}</h6>
+                      <h6>{{$precinct_model->count()}}</h6>
                     </div>
                   </div>
                 </div>
@@ -115,7 +115,7 @@
                       <i class="bi bi-house-fill"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>{{\App\Helper\SqlHelper::get_count('barangay')}}</h6>
+                      <h6>{{$barangay_model->count()}}</h6>
                     </div>
                   </div>
                 </div>
@@ -149,8 +149,8 @@
                       <div class="filter" style="right: 10px !important">
                         <div class="form-floating mt-2">
                           <select class="form-select" name="" id="precinct-barchart-select">
-                            @foreach (\App\Helper\SqlHelper::get_barangay() as $barangay )
-                              <option value="{{$barangay->barangay}}">{{$barangay->barangay}}</option>
+                            @foreach ($barangay_model as $barangay )
+                              <option value="{{$barangay->name}}">{{$barangay->name}}</option>
                             @endforeach
                           </select>
                           <label for="">Barangay</label>
@@ -160,7 +160,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="col">
                   <div class="card">
                     <div class="card-body">
@@ -168,8 +167,8 @@
                       <div class="filter" style="right: 10px !important">
                         <div class="form-floating mt-2">
                           <select class="form-select" name="" id="precinct-piechart-select">
-                            @foreach (\App\Helper\SqlHelper::get_barangay() as $barangay )
-                              <option value="{{$barangay->barangay}}">{{$barangay->barangay}}</option>
+                            @foreach ($barangay_model as $barangay )
+                              <option value="{{$barangay->name}}">{{$barangay->name}}</option>
                             @endforeach
                           </select>
                           <label for="">Barangay</label>

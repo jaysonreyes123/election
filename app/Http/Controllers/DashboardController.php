@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Helper\SqlHelper;
+use App\Models\Barangay;
+use App\Models\Precinct;
+use App\Models\Voters;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     //
+    public function index()
+    {
+        $barangay_model = Barangay::get();
+        $precinct_model = Precinct::get();
+        return view('content.dashboard', compact(['barangay_model', 'precinct_model']));
+    }
     public function barangay()
     {
         $models = SqlHelper::BarangayHelper();

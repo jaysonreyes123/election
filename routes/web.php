@@ -34,9 +34,7 @@ Route::post("/login-process", [LoginController::class, 'login']);
 
 Route::group(["middleware" => 'auth'], function () {
 
-    Route::get("/dashboard", function () {
-        return view('content.dashboard');
-    });
+    Route::get("/dashboard", [DashboardController::class, 'index']);
 
     //users
     Route::group(["prefix" => "users"], function () {
