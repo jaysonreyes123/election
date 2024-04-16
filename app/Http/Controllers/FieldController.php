@@ -123,6 +123,7 @@ class FieldController extends Controller
             }
         } else {
             $model = Field::find($request->id);
+            $model->label = $request->label;
             $model->default = $request->default_value;
             $model->mandatory = $request->mandatory;
             $model->column = $request->column;

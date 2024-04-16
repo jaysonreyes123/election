@@ -272,9 +272,6 @@
                             $("input[name='mandatory']").prop('checked',mandatory_value);
                             $("input[name='column']").prop('checked',column_value);
                             $("#field_id").val($("#"+id+"_id").val())
-
-                            $("input[name='label']").prop('readonly',true);
-                            $("input[name='label']").prop('readonly',true);
                             $("select[name='data_type']").prop('disabled',true);
                             // $("input[name='default_value']").prop('readonly',true);
                             $("input[name='decimals']").prop('readonly',true);

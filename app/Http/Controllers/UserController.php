@@ -88,7 +88,7 @@ class UserController extends Controller
             "email" => ["required", "email", Rule::unique('users', 'email')->ignore(Auth::id(), 'id')],
         ]);
 
-        $model = User::find(Auth::id())->first();
+        $model = User::where("id", Auth::id())->first();
         $model->firstname = $request->firstname;
         $model->lastname = $request->lastname;
         $model->username = $request->username;

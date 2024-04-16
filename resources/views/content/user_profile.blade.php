@@ -6,7 +6,6 @@
   </div>
     <div class="row">
       <div class="col">
-
         <div class="card">
           <div class="card-body pt-3">
             <!-- Bordered Tabs -->
