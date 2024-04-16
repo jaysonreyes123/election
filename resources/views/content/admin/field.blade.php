@@ -157,6 +157,8 @@
         
        $("#block-content").sortable({
             cursor:"move",
+            scrollSpeed: 500,
+            scrollSensitivity:20,
             change:function(event,ui){
                 $("#save-layout-btn").show();
             }
@@ -285,6 +287,8 @@
                                 revert: true,
                                 cursor:"move",
                                 tolerance: "pointer",
+                                scrollSpeed: 500,
+                                scrollSensitivity:20,
                                 change:function(event,ui){
                                     $("#save-layout-btn").show();
                                 }
