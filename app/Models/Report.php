@@ -13,4 +13,8 @@ class Report extends Model
     {
         return $this->hasOne(Tab::class, 'id', 'tabid');
     }
+    public function report_filters_()
+    {
+        return $this->hasMany(ReportFilter::class, 'report_id', 'id');
+    }
 }

@@ -29,16 +29,16 @@ class RoleController extends Controller
     public function save(Request $request)
     {
         $id = $request->id;
+        $request->validate([
+            "role" => "required"
+        ]);
         $model = null;
         if ($id == "") {
             $model = new Role;
         } else {
             $model = Role::find($id);
         }
-        $request->validate([
-            "role" => "required"
-        ]);
-        $model->name = $request->rolename;
+        $model->name = $request->role;
         if ($model->save()) {
             if ($id == "") {
                 $tab_models = Tab::all();

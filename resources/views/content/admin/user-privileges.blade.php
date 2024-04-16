@@ -130,11 +130,11 @@
         $("#user-privileges-table").on('click','.edit',function(){
             const tr = $(this).closest('tr');
             const id = table.row(tr).data().id;
-            const create = table.row(tr).data().create;
-            const edit = table.row(tr).data().edit;
-            const delete_ = table.row(tr).data().delete;
-            const import_ = table.row(tr).data().import;
-            const name = table.row(tr).data().tabs_.name;
+            const create = table.row(tr).data().create == 0 ? false : true;
+            const edit = table.row(tr).data().edit == 0 ? false : true;
+            const delete_ = table.row(tr).data().delete == 0 ? false : true;
+            const import_ = table.row(tr).data().import == 0 ? false : true;
+            const name = table.row(tr).data().tabs_.name == 0 ? false : true;
 
             $("#create").prop("checked",create);
             $("#edit").prop("checked",edit);

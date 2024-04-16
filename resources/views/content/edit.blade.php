@@ -52,32 +52,9 @@
                                 @endif
                                     <td  style="font-weight: bold;width: 10%">{{$field->label}} @if($field->mandatory == 1) <span title="required" class="text-danger">*</span> @endif </td>
                                     <td style="width: 40%">
-                                        @if ($field->type == "picklist")
-                                            <select class="form-control" style="width: 250px" name="{{$columnname}}">
-                                                <option value="">Select an Option</option>
-                                                @foreach (json_decode($field->picklist_value) as $picklist)
-                                                    @if ($id == "")
-                                                        <option value="{{$picklist}}" {{$picklist == $field->default ? "selected" : "" }}>{{$picklist}}</option> 
-                                                    @else
-                                                        <option value="{{$picklist}}" {{$picklist == $value ? "selected" : "" }}>{{$picklist}}</option> 
-                                                    @endif
-                                                    
-                                                @endforeach
-                                            </select>
-                                        
-                                        @elseif ($field->type == "text")
-                                            <input style="width: 250px"  type="text" name="{{$columnname}}" class="form-control" value="{{$value}}">
-                                        @elseif ($field->type == "integer")
-                                            <input style="width: 250px"  type="number" name="{{$columnname}}" class="form-control" value="{{$value}}">
-                                        @elseif ($field->type == "date")
-                                            <input style="width: 250px"  type="date" name="{{$columnname}}" class="form-control" value="{{$value}}">
-                                        @elseif ($field->type == "textarea")
-                                            <textarea name="{{$columnname}}" class="form-control" cols="30" rows="2">{{$value}}</textarea>
-                                        @endif
-                                        
+                                        @include('compontent.edit_field',["fieldtype" => $field->type,"columnname" => $columnname,"value" => $value,"id" => $id])
                                         <div  class="form-text text-danger validation" id="{{$columnname}}_validation"></div>
                                     </td>
-
                                     @if ($fields->count() == 1)
                                         <td style="width: 10%"></td>
                                         <td style="width: 50%"></td>

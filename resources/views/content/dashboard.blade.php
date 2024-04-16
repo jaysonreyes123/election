@@ -18,6 +18,23 @@
       color: #ffb400 !important;
       background: #fff4d9 !important;
     }
+    .card-title > span{
+      font-size: 10px;
+    }
+    .card-icon{
+      height: 40px !important;
+      width: 40px !important;
+    }
+    .card-icon > i{
+      font-size: 17px;
+    }
+    .ps-3 > h6{
+      font-size: 17px !important;
+    }
+    .widget-title{
+      padding: 0px;
+      padding-top: 10px;
+    }
     </style>
     <section class="section dashboard">
         @include('layout._breadcrumb',["title_page"=>"Dashboard"])
@@ -28,7 +45,7 @@
             <div class="col-xl-2 col-lg-4">
               <div class="card info-card">
                 <div class="card-body">
-                  <h5 class="card-title">Yes Votes</span></h5>
+                  <h5 class="card-title widget-title"><span>Yes Votes</span></h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon bg-green rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-person-check-fill"></i>
@@ -44,7 +61,7 @@
             <div class="col-xl-2 col-lg-4">
               <div class="card info-card">
                 <div class="card-body">
-                  <h5 class="card-title">No Votes</span></h5>
+                  <h5 class="card-title widget-title"><span>No Votes</span></h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon bg-red rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-person-x-fill"></i>
@@ -60,7 +77,7 @@
             <div class="col-xl-2 col-lg-4">
               <div class="card info-card">
                 <div class="card-body">
-                  <h5 class="card-title">Total Votes</span></h5>
+                  <h5 class="card-title widget-title"><span>Total Votes</span></h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon bg-yellow rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-people-fill"></i>
@@ -76,7 +93,7 @@
             <div class="col-xl-3 col-lg-4">
               <div class="card info-card sales-card">
                 <div class="card-body">
-                  <h5 class="card-title"># of Precinct</span></h5>
+                  <h5 class="card-title widget-title"><span># of Precinct</span></h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-building"></i>
@@ -92,7 +109,7 @@
             <div class="col-xl-3 col-lg-4">
               <div class="card info-card sales-card">
                 <div class="card-body">
-                  <h5 class="card-title"># of Barangay</span></h5>
+                  <h5 class="card-title widget-title"><span># of Barangay</span></h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-house-fill"></i>

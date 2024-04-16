@@ -37,7 +37,7 @@
                     <div id="error-div"></div>
                     <div class="form-group mb-2">
                         <label for="">Role Name</label>
-                        <input type="text" name="rolename" id="rolename" class="form-control">
+                        <input type="text" name="role" id="rolename" class="form-control">
                         <div  class="form-text text-danger validation"  id="role_validation"></div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                 url:"/roles/save",
                 method:"post",
                 data:{
-                    rolename:$("#rolename").val(),
+                    role:$("#rolename").val(),
                     id:$("#id").val()
                 },
                 success:function(){

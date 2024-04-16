@@ -7,6 +7,7 @@ use App\Helper\FieldHelper;
 use App\Helper\ModuleHelper;
 use App\Helper\ReportHelper;
 use App\Models\Report;
+use App\Models\ReportFilter;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class ReportController extends Controller
     }
     public function list()
     {
-        $model = Report::with('module_')->get();
+        $model = Report::with(['module_', 'report_filters_'])->get();
         return DataTables::of($model)
             ->addIndexColumn()
             ->addColumn("action", function ($item) {
@@ -38,6 +39,7 @@ class ReportController extends Controller
     }
     public function save(Request $request)
     {
+
         $id = $request->id;
         $request->validate([
             "name" => "required",
@@ -54,19 +56,40 @@ class ReportController extends Controller
         $model->name = $request->name;
         $model->column = implode(",", $request->column);
         $model->save();
+        if ($model->save()) {
+            $report_id = $model->id;
+            ReportFilter::where('report_id', $report_id)->delete();
+            if (isset($request->and_field)) {
+                foreach ($request->and_field as $key => $val) {
+                    if ($val != null && $val != "") {
+                        $report_filter_model = new ReportFilter;
+                        $report_filter_model->report_id = $report_id;
+                        $report_filter_model->columnname = $val;
+                        $report_filter_model->filter_type = $request->and_operator[$key];
+                        $report_filter_model->filter_value = $request->and_value[$key] == null ? "" : $request->and_value[$key];
+                        $report_filter_model->operator = "and";
+                        $report_filter_model->save();
+                    }
+                }
+            }
+
+            if (isset($request->or_field)) {
+                foreach ($request->or_field as $key => $val) {
+                    if ($val != null && $val != "") {
+                        $report_filter_model = new ReportFilter;
+                        $report_filter_model->report_id = $report_id;
+                        $report_filter_model->columnname = $val;
+                        $report_filter_model->filter_type = $request->or_operator[$key];
+                        $report_filter_model->filter_value = $request->or_value[$key] == null ? "" : $request->or_value[$key];
+                        $report_filter_model->operator = "or";
+                        $report_filter_model->save();
+                    }
+                }
+            }
+        }
         return $model;
     }
-    public function view($module, $id)
-    {
-        $limit = 100;
-        $moduleid = ModuleHelper::getModuleID($module);
-        $report_details = Report::where('id', $id,)->where('tabid', $moduleid)->first();
-        $headers = explode(",", $report_details->column);
-        $report_model = $this->reportDetails($module, $report_details->column, $limit);
 
-
-        return view('content.admin.report_view', compact(['module', 'report_details', 'id', 'headers', 'moduleid', 'report_model']));
-    }
     public function export($module, $extenstion, $id)
     {
 
@@ -79,7 +102,7 @@ class ReportController extends Controller
             $header_helper = FieldHelper::getSingleFieldModule($moduleid, $header);
             $header_label[] = $header_helper->label;
         }
-        $report_model = $this->reportDetails($module, $report_details->column);
+        $report_model = $this->reportDetails($module, $report_details->column, $report_details->report_filters_);
 
         if ($extenstion == "pdf") {
             $pdf = Pdf::loadView('content.admin.report.report', [
@@ -92,12 +115,22 @@ class ReportController extends Controller
             return Excel::download(new ReportExport($headers, $header_label, $report_model), "$report_details->name.$extenstion");
         }
     }
-    public function reportDetails($module, $column, $limit = "")
+    public function view($module, $id)
+    {
+        $limit = 100;
+        $moduleid = ModuleHelper::getModuleID($module);
+        $report_details = Report::with('report_filters_')->where('id', $id,)->where('tabid', $moduleid)->first();
+        $headers = explode(",", $report_details->column);
+        $report_model = $this->reportDetails($module, $report_details->column, $report_details->report_filters_, $limit);
+        return view('content.admin.report_view', compact(['module', 'report_details', 'id', 'headers', 'moduleid', 'report_model']));
+    }
+    public function reportDetails($module, $column, $filter, $limit = "")
     {
 
         $table = ModuleHelper::getModuleTable($module);
         $column = ReportHelper::queryColumn($table, $column);
-        $report_query = ReportHelper::reportQuery($table, $column, $limit);
+        $filter = ReportHelper::reportFilter($table, $filter);
+        $report_query = ReportHelper::reportQuery($table, $column, $filter, $limit);
         $report_model = DB::select($report_query);
         return $report_model;
     }
