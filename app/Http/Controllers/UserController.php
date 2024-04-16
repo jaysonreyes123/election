@@ -73,4 +73,47 @@ class UserController extends Controller
         $model->save();
         return $model;
     }
+
+    public function profile()
+    {
+        $user_model = User::where('id', Auth::id())->first();
+        return view('content.user_profile', compact(['user_model']));
+    }
+    public function profile_save(Request $request)
+    {
+        $request->validate([
+            "firstname" => "required",
+            "lastname" => "required",
+            "username" => ["required", Rule::unique('users', 'username')->ignore(Auth::id(), 'id')],
+            "email" => ["required", "email", Rule::unique('users', 'email')->ignore(Auth::id(), 'id')],
+        ]);
+
+        $model = User::find(Auth::id())->first();
+        $model->firstname = $request->firstname;
+        $model->lastname = $request->lastname;
+        $model->username = $request->username;
+        $model->email  = $request->email;
+        $model->save();
+        return response()->json([], 200);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            "password" => "required",
+            "new_password" => "required|same:confirmation_password",
+            "confirmation_password" => "required"
+        ]);
+        $password = User::find(Auth::id())->first();
+        $message = [];
+        $status = 200;
+        if (!Hash::check($request->password, $password->password)) {
+            $message["errors"] = ["password" => ["Incorrect password"]];
+            $status = 442;
+        }
+
+        $password->password = Hash::make($request->new_password);
+        $password->save();
+        return response()->json($message, $status);
+    }
 }

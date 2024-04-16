@@ -22,9 +22,9 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="/users">
+              <a class="dropdown-item d-flex align-items-center" href="/users/profile">
                 <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
+                <span>Profile Settings</span>
               </a>
             </li>
             <li>

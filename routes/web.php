@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController as UserControllers;
 use App\Http\Controllers\UserPrivilegesController;
 use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,10 @@ Route::group(["middleware" => 'auth'], function () {
         Route::get("/",  [UserControllers::class, 'index']);
         Route::get("/list",  [UserControllers::class, 'list']);
         Route::post("/save", [UserControllers::class, 'save']);
+
+        Route::get("/profile", [UserControllers::class, 'profile']);
+        Route::post("/profile/save", [UserControllers::class, 'profile_save']);
+        Route::post("/profile/changepassword", [UserControllers::class, 'changePassword']);
     });
 
 
