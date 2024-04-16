@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BlockController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FieldController;
 use App\Http\Controllers\ImportController;
@@ -87,6 +88,7 @@ Route::group(["middleware" => 'auth'], function () {
     //blocks
     Route::group(['prefix' => 'block'], function () {
         Route::get("/list/{module}", [FieldController::class, 'block_list']);
+        Route::post("/sequence", [BlockController::class, 'sequence']);
     });
 
     //dashboard

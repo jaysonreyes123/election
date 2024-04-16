@@ -32,13 +32,13 @@ class FieldController extends Controller
     public function block_list($module)
     {
         $output = array();
-        $models = Block::where('tabid', $module)->get();
+        $models = Block::where('tabid', $module)->orderBy('sort')->get();
         foreach ($models as $model) {
             $data = array(
                 "id" => $model->id,
                 "name" => $model->name
             );
-            $field_models = Field::where('tabid', $module)->where('blockid', $model->id)->get();
+            $field_models = Field::where('tabid', $module)->where('blockid', $model->id)->orderBy('sequence')->get();
             $data["fields"] = $field_models;
             $output[] = $data;
         }

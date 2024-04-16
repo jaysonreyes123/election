@@ -156,7 +156,10 @@
         });
         
        $("#block-content").sortable({
-            cursor:"move"
+            cursor:"move",
+            change:function(event,ui){
+                $("#save-layout-btn").show();
+            }
        });
         
         function showViewLayout(){
@@ -171,7 +174,7 @@
                             item.fields.map((item2,index)=>{
 
                                 fields+=`
-                                <div class='col-6 field'>
+                                <div class='col-6 field field-${item.id}' data-field="${item2.id}">
                                     <div class='card'>
                                         <div class='card-body'>
                                             <div class="d-flex justify-content-between align-items-center">
@@ -199,7 +202,7 @@
                             })
 
                             fields+=`
-                            <div class='col-6 field'>
+                            <div class='col-6'>
                             <div class="card">
                                     <div class="card-body  p-2 ">
                                         <div data-bs-toggle="modal" data-block-id="${item.id}" data-bs-target="#field-modal" class="btn-field border p-5 rounded-2 text-center align-items-center" style="font-size:15px;font-weight:bold;cursor:pointer">
@@ -211,7 +214,7 @@
                                 `;
 
                             content+=`
-                                    <div class="card">
+                                    <div class="card block" data-block="${item.id}">
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between">
                                                 <h6 >${item.name}</h6>
@@ -409,9 +412,29 @@
             })
 
         })
-
+        
         $("#save-layout-btn").click(function(){
-            console.log($(".field"));
+            var block = [];
+            $("#loader").show();
+            $(".block").each(function(i,item){
+                let block_id = $(item).data('block');
+                var field = [];
+                var fields= $(item).find('.field');
+                fields.each(function(index,item2){
+                    let field_id = $(item2).data('field');
+                    field.push(field_id);
+                })
+                block.push({blockid:block_id,fields:field})
+            })
+            $.ajax({
+                url:"/block/sequence",
+                method:"post",
+                data:{block:block},
+                success:function(data){
+                    $("#loader").hide();
+                    location.reload();
+                }
+            })
         })
 
 
