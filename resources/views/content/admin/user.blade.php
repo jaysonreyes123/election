@@ -109,8 +109,9 @@
      var table; 
         $(function(){
            table = $("#users-table").DataTable({
-                ajax:"/users/list",
+                ajax:"/users",
                 autoWidth:false,
+                method:"get",
                 serverSide:true,
                 processing:true,
                 order:[],
