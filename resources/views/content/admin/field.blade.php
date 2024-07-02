@@ -102,6 +102,7 @@
                         <option value="date">date</option>
                         <option value="textarea">text area</option>
                         <option value="picklist">picklist</option>
+                        <option value="file">file</option>
                     </select>
                 </div>
                 <div class="form-group mb-2">
@@ -394,6 +395,9 @@
                     </div>
                 `);
                 $("#field-default-value").html("<select id='default_value' class='form-control' name='default_value'><option value=''>Select an Option</option></select>");
+            }
+            else if($(this).val() == "file"){
+                $("#field-default-value").closest(".form-group").hide();
             }
             else{
                 $("#field-default-value").html("<input type='text' class='form-control' id='default_value' name='default_value'>");

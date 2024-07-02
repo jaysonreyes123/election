@@ -126,7 +126,16 @@
                 <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">CSJDM</h5>
-                    <iframe src="{{ env('QGIS_URL') }}" width="100%" height="500" frameborder="0"></iframe>
+                    @php
+                        $path = public_path()."/qgis";
+                        $qgis = "";
+                        $scandir = array_diff(scandir($path), array('..', '.'));
+                        foreach($scandir as $file){
+                            $qgis = $file;
+                            break;
+                        }
+                    @endphp
+                    <iframe src="{{ asset('qgis/'.$qgis) }}" width="100%" height="500" frameborder="0"></iframe>
                   </div>
                 </div>
               </div>

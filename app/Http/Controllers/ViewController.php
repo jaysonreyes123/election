@@ -47,6 +47,9 @@ class ViewController extends Controller
                 if ($user_privileges->edit == 1) {
                     $button .= "<a title='Edit' href='/edit/module/$module/$id' class='edit' ><span class='bi bi-pen-fill text-warning p-2'></span></a>";
                 }
+                if($module == "Barangays"){
+                    $button .= "<a title='Print' href='javascript:void(0)' data-barangay='".$item->name."' class='print' ><span class='bi bi-file-earmark text-success p-2'></span></a>";
+                }
                 if ($user_privileges->delete == 1) {
                     $button .= "<a title='Delete' href='javascript:void(0)' data-redirect='/delete/module/$module/$id' class='delete' ><span class='bi bi-trash text-danger p-2'></span></a>";
                 }

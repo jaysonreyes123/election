@@ -1,14 +1,17 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BarangayMapController;
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FieldController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\LeadersController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TabsController;
-use App\Http\Controllers\UserController as UserControllers;
+use App\Http\Controllers\UserControllers as UserControllers;
 use App\Http\Controllers\UserPrivilegesController;
 use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
@@ -38,15 +41,23 @@ Route::group(["middleware" => 'auth'], function () {
     Route::get("/dashboard", [DashboardController::class, 'index']);
 
     //users
-    Route::group(["prefix" => "users"], function () {
-        Route::get("/",  [UserControllers::class, 'index']);
-        Route::get("/list",  [UserControllers::class, 'list']);
-        Route::post("/save", [UserControllers::class, 'save']);
+    // Route::group(["prefix" => "users"], function () {
+    //     Route::get("/",  [UserControllers::class, 'index']);
+    //     Route::get("/list",  [UserControllers::class, 'list']);
+    //     Route::post("/save", [UserControllers::class, 'save']);
 
-        Route::get("/profile", [UserControllers::class, 'profile']);
-        Route::post("/profile/save", [UserControllers::class, 'profile_save']);
-        Route::post("/profile/changepassword", [UserControllers::class, 'changePassword']);
-    });
+    //     Route::get("/profile", [UserControllers::class, 'profile']);
+    //     Route::post("/profile/save", [UserControllers::class, 'profile_save']);
+    //     Route::post("/profile/changepassword", [UserControllers::class, 'changePassword']);
+    // });
+
+    Route::get("/users/view", [UserControllers::class, 'view']);
+    Route::resource('/users', UserControllers::class);
+
+    //file
+    Route::post("/file/upload",[FileController::class,'upload']);
+
+    Route::resource("/leaders",LeadersController::class);
 
 
     //role
@@ -64,8 +75,9 @@ Route::group(["middleware" => 'auth'], function () {
     });
 
     //barangay map
-    Route::get("/barangay-map", function () {
-        return view('content.barangay_map');
+    Route::group(["prefix" => "barangay-map"], function () {
+        Route::get("/", [BarangayMapController::class, 'index']);
+        Route::post("/upload", [BarangayMapController::class, 'upload']);
     });
 
 
