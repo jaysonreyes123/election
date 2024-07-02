@@ -20,6 +20,7 @@
         </div>
     </div>
 </section>
+@include('compontent.print')
 @push('script')
     <script>
         var fields = @json($field_column);
@@ -53,6 +54,22 @@
             }
             
         })
+
+        $("#table").on('click','.print',function(){
+            const barangay_name = $(this).data('barangay');
+            // $.ajax({
+            //     url:"/leaders/"+barangay_name,
+            //     method:"get",
+            //     success:function(data){
+            //         document.getElementById('viewer').scr=data
+            //         $("#barangay-print-modal").modal('show');
+            //     }
+            // })
+            $("#barangay-print-name").text(barangay_name);
+            document.getElementById('viewer').src="/leaders/"+barangay_name;
+            $("#barangay-print-modal").modal('show');
+        })
+
 
         
     </script>

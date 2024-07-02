@@ -5,7 +5,9 @@ use App\Http\Controllers\BarangayMapController;
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FieldController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\LeadersController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TabsController;
@@ -51,6 +53,11 @@ Route::group(["middleware" => 'auth'], function () {
 
     Route::get("/users/view", [UserControllers::class, 'view']);
     Route::resource('/users', UserControllers::class);
+
+    //file
+    Route::post("/file/upload",[FileController::class,'upload']);
+
+    Route::resource("/leaders",LeadersController::class);
 
 
     //role

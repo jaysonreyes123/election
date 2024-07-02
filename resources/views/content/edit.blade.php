@@ -107,6 +107,39 @@
             }
         })
     })
+    var files_upload = [];
+    $(".files").change(function(e){
+        $("#loader").show();
+        const files = e.target.files[0];
+        const form = new FormData();
+        form.append("files",files);
+        const columnname = $(e.target).data('file');
+        $("input[name='"+columnname+"']").val(files.name);
+        $("#"+columnname+"_file_name").text(files.name);
+        const files_ = [];
+        files_[columnname] = files;
+        files_upload.map((item,index)=>{
+            if(item[columnname]){
+                files_upload.splice(index, 1)
+            }
+            else{
+                console.log("false");
+            }
+        })
+        files_upload.push(files_)
+        console.log(files_upload);
+        $.ajax({
+            type:"post",
+            url:"/file/upload",
+            processData: false,
+            contentType: false,
+            data:form,
+            success:function(data){
+                console.log(data)
+                $("#loader").hide();
+            }
+        })
+    })
 </script>
 @endpush
 @endsection

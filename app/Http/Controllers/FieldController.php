@@ -62,6 +62,7 @@ class FieldController extends Controller
                 $datatype_ = "int";
                 break;
             case 'textarea':
+            case 'file':
                 $datatype_ = "text";
                 break;
             default:
@@ -77,7 +78,8 @@ class FieldController extends Controller
             }
             if ($datatype_ == "varchar" || $datatype_ == "int") {
                 $length .= "(200)";
-            } else if ($datatype_ == "decimal") {
+            } 
+            else if ($datatype_ == "decimal") {
                 $length .= "(50," . $request->decimals . ")";
             }
             try {

@@ -28,13 +28,20 @@
                                     $data = $field_data->$columnname;
                                     $ctr++;
                                     $per_column = 2;
-
+                                    $filepath = asset('attachment');
+                                    $type = $field->type;
                                 @endphp
                                 @if ($ctr == 1)
                                     <tr>
                                 @endif
                                     <td style="font-weight: bold;width: 10%">{{$field->label}}</td>
-                                    <td style="width: 40%">{{$data}}</td>
+                                    <td style="width: 40%">
+                                        @if ($type == "file")
+                                            <a href="{{$filepath}}/{{$data}}">{{$data}}</a>
+                                        @else
+                                            {{$data}}
+                                        @endif
+                                    </td>
                                 @if ($fields->count() == 1)
                                     <td style="width: 10%"></td>
                                     <td style="width: 40%"></td>
