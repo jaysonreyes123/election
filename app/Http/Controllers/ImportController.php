@@ -28,12 +28,14 @@ class ImportController extends Controller
         $header[] = $import_data[0][0];
         $new_data = [];
         foreach ($import_data[0][0] as $val) {
-            if($val != null){
-                $new_data[] = $val;  
-            }
             $no_data[] = "";
         }
-        $data[] = $new_data ?? $no_data;
+        foreach($import_data[0][$hasheader] as $data_){
+            if($data_ != null){
+                $new_data[] = $data_;
+            }
+        }
+        $data[] = $new_data?? $no_data;
         return $this->table($hasheader, $header, $data[0], $module);
     }
 
@@ -92,8 +94,14 @@ class ImportController extends Controller
     {
         $module = $request->module;
         $files = $request->file('import_file');
-        $import_datas = Excel::toArray([], $files);
+        $import_datas = Excel::toArray([],$files);
         $fields = explode(",", $request->fields);
+        $is_one_field = 0;
+        foreach($fields as $key => $field_){
+            if($field_ != ""){
+                $is_one_field++;
+            }
+        }
 
         $table = ModuleHelper::getModuleTable($module);
         $moduleid = ModuleHelper::getModuleID($module);
@@ -120,17 +128,23 @@ class ImportController extends Controller
             $insert = array();
             $insert_with_status = array();
             $status = ImportConstant::CREATE;
+            if($is_one_field == 1){
+                $import_data_ = implode(" ",$import_data);
+            }
+            else{
+               $import_data_ = $import_data[$key];
+            }
             foreach ($fields as $key => $field) {
                 $getfieldDetails = FieldHelper::getSingleFieldModule($moduleid, $field);
                 if ($field != "") {
-                    $insert[$field] = $import_data[$key];
-                    $insert_with_status[$field] = $import_data[$key];
+                    $insert[$field] = $import_data_;
+                    $insert_with_status[$field] =$import_data_;
                     if ($getfieldDetails->type == "integer") {
-                        if (!is_numeric($import_data[$key])) {
+                        if (!is_numeric($import_data_)) {
                             $status = ImportConstant::NUMERIC_STATUS;
                         }
                     } elseif ($getfieldDetails->type == "date") {
-                        $parse = explode("/", $import_data[$key]);
+                        $parse = explode("/", $import_data_);
                         if (count($parse) != 3) {
                             $status = ImportConstant::DATE_STATUS;
                         }
