@@ -135,12 +135,12 @@
                             break;
                         }
                     @endphp
-                    <iframe src="{{ asset('qgis/'.$qgis) }}" width="100%" height="500" style="margin-top: 20px" frameborder="0"></iframe>
+                    <iframe src="{{ asset('qgis/'.$qgis) }}" width="100%" height="600" style="margin-top: 20px" frameborder="0"></iframe>
                   </div>
                 </div>
               </div>
 
-           
+{{--            
             <div class="col-6">
               <div class="card">
                 <div class="card-body">
@@ -189,7 +189,7 @@
                 </div>
             </div>
           </div>
-        </div><!-- End Left side columns -->
+        </div><!-- End Left side columns --> --}}
 
       </div>
     </section>  
@@ -199,9 +199,9 @@
     var precinct_barchart;
     var precinct_piechart;
     $(function(){
-      barangay_chart();
-      load_precinct();
-      load_precinct_pie();
+      // barangay_chart();
+      // load_precinct();
+      // load_precinct_pie();
     })
 
     function barangay_chart(){
