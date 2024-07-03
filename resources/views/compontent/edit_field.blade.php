@@ -12,7 +12,7 @@
 @elseif ($columnname == "barangay_name")
 <select class="form-control" style="width: 250px" name="{{$columnname}}">
     <option value="">Select an Option</option>
-    @foreach (\App\Models\Barangay::where("is_delete",0)->get() as   $barangay )
+    @foreach (\App\Models\Barangay::where("is_delete",0)->orderBy('name','asc')->get() as   $barangay )
         @if ($id == "")
             <option value="{{$barangay->name}}" {{$barangay->name == $field->default ? "selected" : "" }}>{{$barangay->name}}</option> 
         @else
@@ -23,7 +23,7 @@
 @elseif ($columnname == "barangay")
 <select class="form-control" style="width: 250px" name="{{$columnname}}">
     <option value="">Select an Option</option>
-    @foreach (\App\Models\Barangay::where("is_delete",0)->get() as   $barangay )
+    @foreach (\App\Models\Barangay::where("is_delete",0)->orderBy('name','asc')->get() as   $barangay )
         @if ($id == "")
             <option value="{{$barangay->name}}" {{$barangay->name == $field->default ? "selected" : "" }}>{{$barangay->name}}</option> 
         @else

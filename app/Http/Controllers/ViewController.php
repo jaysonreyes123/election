@@ -36,8 +36,13 @@ class ViewController extends Controller
         $table = ModuleHelper::getModuleTable($module);
         $getModuleID = ModuleHelper::getModuleID($module);
         $user_privileges = UserPrivilegesHelper::getUserPrivileges($getModuleID);
-
-        $model =  DB::table($table)->where('is_delete', 0)->get();
+        if($table == "barangays_table"){
+            $model =  DB::table($table)->where('is_delete', 0)->orderBy('name','asc')->get();
+        }
+        else{
+            $model =  DB::table($table)->where('is_delete', 0)->get();
+        }
+        
         return DataTables::of($model)
             ->addIndexColumn()
             ->addColumn('action', function ($item) use ($user_privileges, $module) {
