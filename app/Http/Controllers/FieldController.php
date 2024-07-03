@@ -22,7 +22,7 @@ class FieldController extends Controller
     }
     public function save(Request $request)
     {
-        $model = new Block;
+        $model = $request->id == "" ? new Block : Block::find($request->id);
         $model->name = $request->get('name');
         $model->tabid = $request->get('module');
         $model->save();
@@ -100,6 +100,7 @@ class FieldController extends Controller
                 $model->blockid = $request->block_id;
                 $model->mandatory = $request->mandatory;
                 $model->column = $request->column;
+                $model->presence = $request->presence;
                 $model->sequence = $sequnce;
                 $model->table = $table;
                 if ($model->save()) {
@@ -129,6 +130,7 @@ class FieldController extends Controller
             $model->default = $request->default_value;
             $model->mandatory = $request->mandatory;
             $model->column = $request->column;
+            $model->presence = $request->presence;
             $model->picklist_value = json_encode($request->picklist);
             $model->save();
         }

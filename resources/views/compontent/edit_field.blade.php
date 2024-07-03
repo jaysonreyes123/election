@@ -39,7 +39,7 @@
 <input style="width: 250px"  type="date" name="{{$columnname}}" class="form-control" value="{{$value}}">
 @elseif ($fieldtype == "file")
 <label for="{{$columnname}}_file">
-    <span class="form-control " style="width: 250px;cursor: pointer;" id="{{$columnname}}_file_name">{{$value == "" ? "Upload file" : $value}}</span>
+    <span class="form-control " style="min-width: 250px;cursor: pointer;" id="{{$columnname}}_file_name">{{$value == "" ? "Upload file" : $value}}</span>
 </label>
 <input style="width: 250px;display:none;" id="{{$columnname}}_file" type="file"  class="form-control files" data-file={{$columnname}} value="{{$value}}">
 <input style="width: 250px"  type="hidden" name="{{$columnname}}" class="form-control" value="{{$value}}">

@@ -27,7 +27,7 @@
                         $models = \App\Models\Tab::all();
                     @endphp
                     @foreach ($models as $model )
-                        <option value="{{$model->id}}">{{$model->name}}</option>
+                        <option value="{{$model->id}}">{{$model->label}}</option>
                     @endforeach
                 </select>
                 <label for="">Select Module</label>
@@ -40,9 +40,9 @@
                 <li class="nav-item" role="presentation">
                     <a href="#showViewLayout" class="nav-link"  data-bs-toggle="tab" data-bs-target="#showViewLayout" type="button" role="tab" >Detail View Layout</a>
                 </li>
-                <li class="nav-item" role="presentation">
+                {{-- <li class="nav-item" role="presentation">
                     <a href="#showDuplicatePrevention" class="nav-link" data-bs-toggle="tab" data-bs-target="#showDuplicatePrevention" type="button" role="tab">Duplicate Prevention</a>
-                </li>
+                </li> --}}
             </ul>
             <div class="tab-content">
                 <div class="tab-pane" id="showViewLayout" role="tabpanel">
@@ -75,6 +75,7 @@
             </div>
             <div class="modal-footer d-flex justify-content-between">
                 <a class="btn btn-default" data-bs-dismiss="modal">Cancel</a>
+                <input type="hidden" id="block_id_">
                 <button class="btn btn-primary btn-sm">Save</button>
             </div>
         </form>
@@ -129,6 +130,10 @@
                     <label for="column" class="form-check-label">Column</label>
                     <input type="checkbox" id="column" name="column" class="form-check-input">
                 </div>
+                <div class="form-check mb-2">
+                    <label for="presence" class="form-check-label">Presence</label>
+                    <input type="checkbox" id="presence" name="presence" class="form-check-input">
+                </div>
             </div>
             <div class="modal-footer d-flex justify-content-between">
                 <a class="btn btn-default" data-bs-dismiss="modal">Cancel</a>
@@ -166,6 +171,7 @@
        });
         
         function showViewLayout(){
+                $("#loader").show();
                 var module_ = $("#block-select").val();
                 $.ajax({
                     url:"/block/list/"+module_,
@@ -190,6 +196,7 @@
                                             <h6 class="mb-2 mt-4">Properties</h6>
                                             <h6 class="card-subtitle mb-2 text-muted">Required: ${item2.mandatory == 1 ? "<span class='badge bg-success'>on</span>" : "<span class='badge bg-danger'>off</span>" }</h6>
                                             <h6 class="card-subtitle mb-2 text-muted">Column: ${item2.column == 1 ? "<span class='badge bg-success'>on</span>" : "<span class='badge bg-danger'>off</span>" }</h6>
+                                            <h6 class="card-subtitle mb-2 text-muted">Presence: ${item2.presence == 1 ? "<span class='badge bg-success'>on</span>" : "<span class='badge bg-danger'>off</span>" }</h6>
                                             <input type="hidden" id="${item2.table}_${item2.columnname}_label" value="${item2.label}" >
                                             <input type="hidden" id="${item2.table}_${item2.columnname}_datatype" value="${item2.type}" >
                                             <input type="hidden" id="${item2.table}_${item2.columnname}_default" value="${item2.default}" >
@@ -197,6 +204,7 @@
                                             <input type="hidden" id="${item2.table}_${item2.columnname}_decimals" value="${item2.decimals}" >
                                             <input type="hidden" id="${item2.table}_${item2.columnname}_mandatory" value="${item2.mandatory}" >
                                             <input type="hidden" id="${item2.table}_${item2.columnname}_column" value="${item2.column}" >
+                                            <input type="hidden" id="${item2.table}_${item2.columnname}_presence" value="${item2.presence}" >
                                             <input type="hidden" id="${item2.table}_${item2.columnname}_picklist" value="${item2.type == "picklist" ? JSON.parse(item2.picklist_value) : "" }" >
                                         </div>
                                     </div>
@@ -221,7 +229,10 @@
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between">
                                                 <h6 >${item.name}</h6>
-                                                <button class="btn btn-default btn-sm border shadow shadow-sm btn-field" data-block-id="${item.id}">Add Field</button>
+                                                <div>
+                                                    <button class="btn btn-default btn-sm border shadow shadow-sm btn-field" data-block-id="${item.id}">Add Field</button>
+                                                    <button class="btn btn-default btn-sm border shadow shadow-sm btn-block" data-block-name="${item.name}" data-block-id="${item.id}">Edit block</button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -250,6 +261,13 @@
                             $("#block_id").val(block_id);
                             $("#field-modal").modal('show');
                         })
+                        $(".btn-block").click(function(){
+                            var block_id = $(this).data('block-id');
+                            var block_name = $(this).data('block-name');
+                            $("#block-name").val(block_name);
+                            $("#block_id_").val(block_id);
+                            $("#block-modal").modal('show');
+                        })
                         $(".edit").click(function(){
                             let id = $(this).data('id');
                             $("input[name='label']").val($("#"+id+"_label").val());
@@ -270,8 +288,10 @@
                             
                             var mandatory_value = $("#"+id+"_mandatory").val() == 1 ? true : false;
                             var column_value = $("#"+id+"_column").val() == 1 ? true : false;
+                            var presence_value = $("#"+id+"_presence").val() == 1 ? true : false;
                             $("input[name='mandatory']").prop('checked',mandatory_value);
                             $("input[name='column']").prop('checked',column_value);
+                            $("input[name='presence']").prop('checked',presence_value);
                             $("#field_id").val($("#"+id+"_id").val())
                             $("select[name='data_type']").prop('disabled',true);
                             // $("input[name='default_value']").prop('readonly',true);
@@ -293,6 +313,7 @@
                  
                             }
                         );
+                        $("#loader").hide();
                     }
                 })
                
@@ -304,7 +325,8 @@
                 method:"post",
                 data:{
                     module:$("#block-select").val(),
-                    name:$("#block-name").val()
+                    name:$("#block-name").val(),
+                    id:$("#block_id_").val()
                 },
                 success:function(data){
                     showViewLayout();
@@ -315,6 +337,7 @@
         })
         $("#field-form").on('submit',function(e){
             e.preventDefault();
+            $("#loader").show();
             $.ajax({
                 url:"/field/save-field",
                 method:"post",
@@ -325,6 +348,7 @@
                     default_value:$("#default_value").val(),
                     mandatory:$("input[name='mandatory']").is(":checked") ? 1 :0,
                     column:$("input[name='column']").is(":checked") ? 1 :0,
+                    presence:$("input[name='presence']").is(":checked") ? 1 :0,
                     tabid:$("#block-select").val(),
                     decimals:$("input[name='decimals']").val(),
                     picklist:$("#picklist-select").val(),
@@ -333,6 +357,7 @@
                 success:function(data){
                     showViewLayout();
                     $("#field-modal").modal('hide');
+                    $("#loader").hide();
                  
                     
                 },
@@ -342,6 +367,7 @@
                             ${err.responseJSON.error}
                         </div>
                     `);
+                    $("#loader").hide();
                 }
 
             })

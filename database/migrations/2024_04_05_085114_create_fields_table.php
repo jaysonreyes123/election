@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('mandatory')->nullable();
             $table->string('column')->nullable();
             $table->integer('editable')->default(1);
+            $table->integer('presence')->default(1);
             $table->timestamps();
         });
     }

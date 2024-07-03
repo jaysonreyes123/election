@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Leaders extends Model
 {
     use HasFactory;
-    protected $table = 'Leaders_table';
+    protected $table = 'leaders_table';
 }

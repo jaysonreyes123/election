@@ -26,7 +26,7 @@ class FieldSeeder extends Seeder
                 "blockid" => 1,
                 "mandatory" => 1,
                 "column" => 1,
-                "editable" => 0
+                "editable" => 1
             ],
             [
                 "table" => "voters_table",
@@ -38,7 +38,7 @@ class FieldSeeder extends Seeder
                 "blockid" => 1,
                 "mandatory" => 1,
                 "column" => 1,
-                "editable" => 0
+                "editable" => 1
             ],
             [
                 "table" => "voters_table",
@@ -50,7 +50,7 @@ class FieldSeeder extends Seeder
                 "blockid" => 1,
                 "mandatory" => 1,
                 "column" => 1,
-                "editable" => 0
+                "editable" => 1
             ],
             [
                 "table" => "voters_table",
@@ -62,7 +62,7 @@ class FieldSeeder extends Seeder
                 "blockid" => 1,
                 "mandatory" => 1,
                 "column" => 1,
-                "editable" => 0
+                "editable" => 1
             ],
             [
                 "table" => "voters_table",
@@ -74,7 +74,7 @@ class FieldSeeder extends Seeder
                 "blockid" => 1,
                 "mandatory" => 1,
                 "column" => 1,
-                "editable" => 0
+                "editable" => 1
             ],
             [
                 "table" => "voters_table",
@@ -86,7 +86,7 @@ class FieldSeeder extends Seeder
                 "blockid" => 1,
                 "mandatory" => 1,
                 "column" => 1,
-                "editable" => 0
+                "editable" => 1
             ],
             [
                 "table" => "voters_table",
@@ -98,7 +98,7 @@ class FieldSeeder extends Seeder
                 "blockid" => 1,
                 "mandatory" => 1,
                 "column" => 1,
-                "editable" => 0
+                "editable" => 1
             ],
 
             //end voters
@@ -115,7 +115,7 @@ class FieldSeeder extends Seeder
                 "blockid" => 2,
                 "mandatory" => 1,
                 "column" => 1,
-                "editable" => 0
+                "editable" => 1
             ],
             [
                 "table" => "barangays_table",
@@ -127,7 +127,7 @@ class FieldSeeder extends Seeder
                 "blockid" => 2,
                 "mandatory" => 1,
                 "column" => 1,
-                "editable" => 0
+                "editable" => 1
             ],
 
             //end barangay
@@ -144,7 +144,7 @@ class FieldSeeder extends Seeder
                 "blockid" => 3,
                 "mandatory" => 1,
                 "column" => 1,
-                "editable" => 0
+                "editable" => 1
             ],
 
             //precinct
@@ -158,7 +158,7 @@ class FieldSeeder extends Seeder
                 "blockid" => 3,
                 "mandatory" => 1,
                 "column" => 1,
-                "editable" => 0
+                "editable" => 1
             ],
         ]);
     }

@@ -109,7 +109,7 @@
      var table; 
         $(function(){
            table = $("#users-table").DataTable({
-                ajax:"/users",
+                ajax:"/users/list",
                 autoWidth:false,
                 method:"get",
                 serverSide:true,

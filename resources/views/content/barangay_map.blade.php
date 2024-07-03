@@ -4,8 +4,8 @@
 <section class="section">
     <div class="card p-3">
         <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center">
-            <h5 class="card-title">CSJDM</h5>
+            <div class="d-flex justify-content-end align-items-center mb-4">
+            {{-- <h5 class="card-title">CSJDM</h5> --}}
             <button class="btn btn-success btn" data-bs-target="#upload-map-modal" data-bs-toggle="modal">Upload map</button>
             </div>
             @php
@@ -17,7 +17,7 @@
                     break;
                 }
             @endphp
-            <iframe src="{{ asset('qgis/'.$qgis) }}" width="100%" height="500" frameborder="0"></iframe>
+            <iframe src="{{ asset('qgis/'.$qgis) }}" width="100%" height="700" frameborder="0"></iframe>
         </div>
     </div>
 

@@ -19,19 +19,22 @@
         text-align: left;
     }
     .barangay_map_image{
-        width: 150px;
-        height: 150px;
+        width: 600px;
+        height: 500px;
         margin-bottom: 20px;
+    }
+    .table1{
+        width: 30%;
     }
 </style>
 @if (!empty($table1))
     
 
-
+<h2>Barangay Map Report</h2>
 <center><img class="barangay_map_image" src="{{public_path("attachment/".$barangay_map)}}" alt=""></center>
-<table>
+<table class="table1">
     <tr>
-        <th>{{strtoupper($barangay)}}</th>
+        <th>BRGY. {{strtoupper($barangay)}}</th>
         <th></th>
     </tr>
 @foreach ($table1 as $key => $val )

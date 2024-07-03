@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('tabs', function (Blueprint $table) {
             $table->id();
             $table->string("name")->nullable();
+            $table->string("label")->nullable();
             $table->boolean('status')->nullable();
+            $table->integer('sort')->nullable();
             $table->timestamps();
         });
     }

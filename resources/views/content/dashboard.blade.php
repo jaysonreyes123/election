@@ -42,7 +42,7 @@
         <div class="col-lg-12">
           <div class="row">
 
-            <div class="col-xl-2 col-lg-4">
+            {{-- <div class="col-xl-2 col-lg-4">
               <div class="card info-card">
                 <div class="card-body">
                   <h5 class="card-title widget-title"><span>Yes Votes</span></h5>
@@ -72,9 +72,9 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> --}}
 
-            <div class="col-xl-2 col-lg-4">
+            <div class="col-xl-3 col-lg-4">
               <div class="card info-card">
                 <div class="card-body">
                   <h5 class="card-title widget-title"><span>Total Votes</span></h5>
@@ -93,7 +93,7 @@
             <div class="col-xl-3 col-lg-4">
               <div class="card info-card sales-card">
                 <div class="card-body">
-                  <h5 class="card-title widget-title"><span># of Precinct</span></h5>
+                  <h5 class="card-title widget-title"><span>No. of Precinct</span></h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-building"></i>
@@ -109,7 +109,7 @@
             <div class="col-xl-3 col-lg-4">
               <div class="card info-card sales-card">
                 <div class="card-body">
-                  <h5 class="card-title widget-title"><span># of Barangay</span></h5>
+                  <h5 class="card-title widget-title"><span>No. of Barangay</span></h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-house-fill"></i>
@@ -125,7 +125,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title">CSJDM</h5>
+                    {{-- <h5 class="card-title">CSJDM</h5> --}}
                     @php
                         $path = public_path()."/qgis";
                         $qgis = "";
@@ -135,7 +135,7 @@
                             break;
                         }
                     @endphp
-                    <iframe src="{{ asset('qgis/'.$qgis) }}" width="100%" height="500" frameborder="0"></iframe>
+                    <iframe src="{{ asset('qgis/'.$qgis) }}" width="100%" height="500" style="margin-top: 20px" frameborder="0"></iframe>
                   </div>
                 </div>
               </div>

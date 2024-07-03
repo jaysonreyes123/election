@@ -11,6 +11,7 @@ use App\Http\Controllers\LeadersController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TabsController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserControllers as UserControllers;
 use App\Http\Controllers\UserPrivilegesController;
 use App\Http\Controllers\ViewController;
@@ -41,18 +42,18 @@ Route::group(["middleware" => 'auth'], function () {
     Route::get("/dashboard", [DashboardController::class, 'index']);
 
     //users
-    // Route::group(["prefix" => "users"], function () {
-    //     Route::get("/",  [UserControllers::class, 'index']);
-    //     Route::get("/list",  [UserControllers::class, 'list']);
-    //     Route::post("/save", [UserControllers::class, 'save']);
+    Route::group(["prefix" => "users"], function () {
+        Route::get("/",  [UserController::class, 'index']);
+        Route::get("/list",  [UserController::class, 'list']);
+        Route::post("/save", [UserController::class, 'save']);
 
-    //     Route::get("/profile", [UserControllers::class, 'profile']);
-    //     Route::post("/profile/save", [UserControllers::class, 'profile_save']);
-    //     Route::post("/profile/changepassword", [UserControllers::class, 'changePassword']);
-    // });
+        Route::get("/profile", [UserController::class, 'profile']);
+        Route::post("/profile/save", [UserController::class, 'profile_save']);
+        Route::post("/profile/changepassword", [UserController::class, 'changePassword']);
+    });
 
-    Route::get("/users/view", [UserControllers::class, 'view']);
-    Route::resource('/users', UserControllers::class);
+    // Route::get("/users/view", [UserControllers::class, 'view']);
+    // Route::resource('/users', UserControllers::class);
 
     //file
     Route::post("/file/upload",[FileController::class,'upload']);
@@ -87,6 +88,7 @@ Route::group(["middleware" => 'auth'], function () {
         Route::get("/list", [TabsController::class, 'list']);
         Route::post("/save", [TabsController::class, 'save']);
         Route::get("/delete/{id}", [TabsController::class, 'delete']);
+        Route::post("/sort", [TabsController::class, 'sort']);
     });
 
 

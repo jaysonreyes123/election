@@ -21,24 +21,31 @@ class TabsController extends Controller
     {
         return view("content.admin.tab");
     }
+    public function sort(Request $request){
+        foreach($request->sort_tab as $key => $sort){
+            $model = Tab::find($sort);
+            $model->sort = $key + 1;
+            $model->save();
+        }
+    }
     public function list()
     {
-        $model = Tab::all();
+        $model = Tab::orderBy('sort','asc')->get();
         return DataTables::of($model)
             ->addIndexColumn()
-            // ->addColumn("action", function () {
-            //     return "<a href='javascript:void(0)' class='edit' ><span class='bi bi-pen-fill text-warning'></span></a>";
-            // })
-            // ->addColumn("status", function ($item) {
-            //     $status = "";
-            //     if ($item->status == "0") {
-            //         $status = "<span class='badge bg-danger'>Inactive</span>";
-            //     } else {
-            //         $status = "<span class='badge bg-success'>Active</span>";
-            //     }
-            //     return $status;
-            // })
-            // ->rawColumns(['status', 'action'])
+            ->addColumn("action", function () {
+                return "<a href='javascript:void(0)' class='edit' ><span class='bi bi-pen-fill text-warning'></span></a>";
+            })
+            ->addColumn("status", function ($item) {
+                $status = "";
+                if ($item->status == "0") {
+                    $status = "<span class='badge bg-danger'>Inactive</span>";
+                } else {
+                    $status = "<span class='badge bg-success'>Active</span>";
+                }
+                return $status;
+            })
+            ->rawColumns(['status', 'action'])
             ->make(true);
     }
     public function save(Request $request)
@@ -50,12 +57,18 @@ class TabsController extends Controller
         ]);
         if ($id == "") {
             $model = new Tab;
+            $model->name = $request->get("name");
+            $model->label = $request->get("name");
+            $model->status = $request->get('status');
+            $sort_number = Tab::max('sort');
+            $model->sort = $sort_number + 1;
         } else {
             $model = Tab::find($id);
+            $model->label = $request->get("name");
+            $model->status = $request->get('status');;
         }
 
-        $model->name = $request->get("name");
-        $model->status = $request->get("status");
+        
         if ($model->save()) {
             if ($id == "") {
                 $tabid = $model->id;

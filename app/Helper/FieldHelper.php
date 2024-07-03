@@ -10,13 +10,14 @@ class FieldHelper
 
     public static function getColumn($module_id)
     {
-        $model = Field::where('tabid', $module_id)->where('column', 1)->get();
+        $model = Field::where('tabid', $module_id)->where('column', 1)->where('presence',1)->get();
         return $model;
     }
     public static function getField($moduleid, $block)
     {
         $model = Field::where('tabid', $moduleid)
             ->where('blockid', $block)
+            ->where('presence',1)
             ->orderBy('sequence')
             ->get();
         return $model;
@@ -24,6 +25,7 @@ class FieldHelper
     public static function getfieldModule($moduleid)
     {
         $model = Field::where('tabid', $moduleid)
+            ->where('presence',1)
             ->get();
         return $model;
     }
@@ -31,6 +33,7 @@ class FieldHelper
     {
         $model = Field::where('tabid', $moduleid)
             ->where('columnname', $columnname)
+            ->where('presence',1)
             ->first();
         return $model;
     }

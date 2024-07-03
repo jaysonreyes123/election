@@ -17,15 +17,21 @@ class ModuleSeeder extends Seeder
         DB::table('tabs')->insert([
             [
                 "name" => "Voters",
-                "status" => 1
+                "label" => "Voters",
+                "status" => 1,
+                "sort"  => 1,
             ],
             [
                 "name" => "Barangays",
-                "status" => 1
+                "label" => "Barangays",
+                "status" => 1,
+                "sort" => 2
             ],
             [
                 "name" => "Precinct",
-                "status" => 1
+                "label" => "Precinct",
+                "status" => 1,
+                "sort"   => 3
             ]
         ]);
     }

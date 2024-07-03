@@ -8,10 +8,10 @@
         </a>
       </li>
       <li class="nav-heading">Module</li>
-        @foreach (\App\Models\Tab::all() as $module )
+        @foreach (\App\Models\Tab::where('status',1)->orderBy('sort','asc')->get() as $module )
           <li class="nav-item">
             <a class="nav-link {{$menu == $module->name ? "" : "collapsed"}}" href="/view/module/{{$module->name}}">
-              <span>{{$module->name}}</span>
+              <span>{{$module->label}}</span>
             </a>
           </li>
         @endforeach
