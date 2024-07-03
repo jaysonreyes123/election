@@ -13,7 +13,7 @@ class FileController extends Controller
             $file = $request->file('files');
             $filepath = asset('attachment');
             $filename = $file->getClientOriginalName();
-            $file->move('attachment',$filename);
+            $file->move('public/attachment',$filename);
         }
     }
 }

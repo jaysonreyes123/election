@@ -10,7 +10,7 @@ class FieldHelper
 
     public static function getColumn($module_id)
     {
-        $model = Field::where('tabid', $module_id)->where('column', 1)->where('presence',1)->get();
+        $model = Field::where('tabid', $module_id)->where('column', 1)->where('presence',1)->orderBy('sequence','asc')->get();
         return $model;
     }
     public static function getField($moduleid, $block)

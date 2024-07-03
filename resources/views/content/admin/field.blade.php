@@ -131,7 +131,7 @@
                     <input type="checkbox" id="column" name="column" class="form-check-input">
                 </div>
                 <div class="form-check mb-2">
-                    <label for="presence" class="form-check-label">Presence</label>
+                    <label for="presence" class="form-check-label">Disply field</label>
                     <input type="checkbox" id="presence" name="presence" class="form-check-input">
                 </div>
             </div>
@@ -196,7 +196,7 @@
                                             <h6 class="mb-2 mt-4">Properties</h6>
                                             <h6 class="card-subtitle mb-2 text-muted">Required: ${item2.mandatory == 1 ? "<span class='badge bg-success'>on</span>" : "<span class='badge bg-danger'>off</span>" }</h6>
                                             <h6 class="card-subtitle mb-2 text-muted">Column: ${item2.column == 1 ? "<span class='badge bg-success'>on</span>" : "<span class='badge bg-danger'>off</span>" }</h6>
-                                            <h6 class="card-subtitle mb-2 text-muted">Presence: ${item2.presence == 1 ? "<span class='badge bg-success'>on</span>" : "<span class='badge bg-danger'>off</span>" }</h6>
+                                            <h6 class="card-subtitle mb-2 text-muted">Display field: ${item2.presence == 1 ? "<span class='badge bg-success'>on</span>" : "<span class='badge bg-danger'>off</span>" }</h6>
                                             <input type="hidden" id="${item2.table}_${item2.columnname}_label" value="${item2.label}" >
                                             <input type="hidden" id="${item2.table}_${item2.columnname}_datatype" value="${item2.type}" >
                                             <input type="hidden" id="${item2.table}_${item2.columnname}_default" value="${item2.default}" >
