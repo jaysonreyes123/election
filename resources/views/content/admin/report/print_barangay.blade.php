@@ -27,11 +27,9 @@
         width: 30%;
     }
 </style>
-@if (!empty($table1))
-    
-
 <h2>Barangay Map Report</h2>
 <center><img class="barangay_map_image" src="{{public_path("attachment/".$barangay_map)}}" alt=""></center>
+@if (!empty($table1))
 <table class="table1">
     <tr>
         <th>BRGY. {{strtoupper($barangay)}}</th>
