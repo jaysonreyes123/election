@@ -94,7 +94,6 @@ class ImportController extends Controller
         $files = $request->file('import_file');
         $import_datas = Excel::toArray([], $files);
         $fields = explode(",", $request->fields);
-        return $import_datas;
 
         $table = ModuleHelper::getModuleTable($module);
         $moduleid = ModuleHelper::getModuleID($module);
