@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="card p-2">
                 <div class="card-body">
-                    <table class="table" id="table">
+                    <table class="table" id="table" style="width:100%">
                         <thead>
                             @foreach ($field_column as $column)
                                 <th>{{$column->label}}</th>
@@ -41,7 +41,8 @@
                 processing:true,
                 serverSide:true,
                 columns:columns,
-                order:[]
+                order:[],
+                columnDefs: [{ width: '20%', targets: 0 }],
             });
         })
 
