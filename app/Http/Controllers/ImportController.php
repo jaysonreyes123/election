@@ -26,10 +26,14 @@ class ImportController extends Controller
         $no_data = array();
         $hasheader = $request->hasheader;
         $header[] = $import_data[0][0];
+        $new_data = [];
         foreach ($import_data[0][0] as $val) {
+            if($val != null){
+                $new_data[] = $val;  
+            }
             $no_data[] = "";
         }
-        $data[] = $import_data[0][$hasheader] ?? $no_data;
+        $data[] = $new_data ?? $no_data;
         return $this->table($hasheader, $header, $data[0], $module);
     }
 
@@ -88,8 +92,9 @@ class ImportController extends Controller
     {
         $module = $request->module;
         $files = $request->file('import_file');
-        $import_datas = Excel::toArray(collect([]), $files);
+        $import_datas = Excel::toArray([], $files);
         $fields = explode(",", $request->fields);
+        return $import_datas;
 
         $table = ModuleHelper::getModuleTable($module);
         $moduleid = ModuleHelper::getModuleID($module);
