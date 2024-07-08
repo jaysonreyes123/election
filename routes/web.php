@@ -6,6 +6,7 @@ use App\Http\Controllers\BlockController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FieldController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\LeadersController;
 use App\Http\Controllers\ReportController;
@@ -57,7 +58,6 @@ Route::group(["middleware" => 'auth'], function () {
 
     //file
     Route::post("/file/upload",[FileController::class,'upload']);
-
     Route::resource("/leaders",LeadersController::class);
 
 
@@ -97,6 +97,7 @@ Route::group(["middleware" => 'auth'], function () {
         Route::get("/", [FieldController::class, 'index']);
         Route::post("/save-block", [FieldController::class, 'save']);
         Route::post("/save-field",  [FieldController::class, 'save_field']);
+        Route::post("/filter",[ViewController::class,'list_filter']);
     });
 
     //blocks
@@ -112,11 +113,13 @@ Route::group(["middleware" => 'auth'], function () {
 
     //view
     Route::get("/view/module/{module}/", [ViewController::class, 'index']);
-    Route::get("/view/module/list/{module}/", [ViewController::class, 'list']);
+    Route::post("/view/module/list", [ViewController::class, 'list']);
     Route::get("/view/module/{module}/{id}", [ViewController::class, 'detail']);
     Route::get("/edit/module/{module}/{id?}", [ViewController::class, 'edit']);
     Route::post("/save/module", [ViewController::class, 'save']);
     Route::get("/delete/module/{module}/{id}", [ViewController::class, 'delete']);
+    Route::post("/view/multiple_delete", [ViewController::class, 'multiple_delete']);
+    Route::post("/filter/selectall", [ViewController::class, 'filter_selectall']);
 
     //import
     Route::post("/import-step1", [ImportController::class, 'import_step1']);

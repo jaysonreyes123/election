@@ -31,20 +31,34 @@ class ViewController extends Controller
             ])
         );
     }
-    public function list($module)
-    {
+    public function list_data($request){
+        $module = $request->module;
         $table = ModuleHelper::getModuleTable($module);
-        $getModuleID = ModuleHelper::getModuleID($module);
-        $user_privileges = UserPrivilegesHelper::getUserPrivileges($getModuleID);
         if($table == "barangays_table"){
-            $model =  DB::table($table)->where('is_delete', 0)->orderBy('name','asc')->get();
+            $model =  DB::table($table)->where('is_delete', 0);
         }
         else{
-            $model =  DB::table($table)->where('is_delete', 0)->get();
+            $model =  DB::table($table)->where('is_delete', 0);
         }
-        
-        return DataTables::of($model)
+        if(isset($request->filter_column)){
+            foreach($request->filter_column as $key => $value){
+                $model->where($value,"like",$request->filter_value[$key]."%");
+            }
+        }
+       return $model;
+    }
+    public function list(Request $request)
+    {
+        $module = $request->module;
+        $getModuleID = ModuleHelper::getModuleID($module);
+        $user_privileges = UserPrivilegesHelper::getUserPrivileges($getModuleID);
+        $model = $this->list_data($request);
+        return DataTables::of($model->get())
             ->addIndexColumn()
+            ->addColumn('id',function($item) use ($module){
+                $id = ModuleHelper::getModuleKey($module);
+                return $item->$id;
+            })
             ->addColumn('action', function ($item) use ($user_privileges, $module) {
                 $id_ = ModuleHelper::getModuleKey($module);
                 $id = $item->$id_;
@@ -62,6 +76,11 @@ class ViewController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+    public function filter_selectall(Request $request){
+        $filter_data =  $this->list_data($request);
+        $id = ModuleHelper::getModuleKey($request->module);
+        return $filter_data->pluck($id);
     }
     public function detail($module, $id)
     {
@@ -125,5 +144,14 @@ class ViewController extends Controller
         $table = ModuleHelper::getModuleTable($module);
         DB::table($table)->where($primaryKey, $id)->update(["is_delete" => 1]);
         return redirect("/view/module/$module");
+    }
+    public function multiple_delete(Request $request)
+    {   
+        $module = $request->module;
+        $row_selected = $request->row_selected;
+        $primaryKey = ModuleHelper::getModuleKey($module);
+        $table = ModuleHelper::getModuleTable($module);
+        DB::table($table)->whereIn($primaryKey,$row_selected)->update(["is_delete" => 1]);
+        return response()->json([],200);
     }
 }
