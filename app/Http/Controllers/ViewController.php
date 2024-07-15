@@ -42,7 +42,9 @@ class ViewController extends Controller
         }
         if(isset($request->filter_column)){
             foreach($request->filter_column as $key => $value){
-                $model->where($value,"like",$request->filter_value[$key]."%");
+                if($request->filter_value[$key] != ""){
+                    $model->where($value,"like",$request->filter_value[$key]."%");
+                }
             }
         }
        return $model;
@@ -122,7 +124,7 @@ class ViewController extends Controller
                 $rules[$field->columnname] = implode("|", $rule_array);
             }
             $error_name[$field->columnname] = $field->label;
-            $data[$field->columnname] = $request->get($field->columnname);
+            $data[$field->columnname] = trim($request->get($field->columnname));
         }
 
         $request->validate($rules);

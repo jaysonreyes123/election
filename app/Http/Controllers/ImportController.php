@@ -137,8 +137,8 @@ class ImportController extends Controller
             foreach ($fields as $key => $field) {
                 $getfieldDetails = FieldHelper::getSingleFieldModule($moduleid, $field);
                 if ($field != "") {
-                    $insert[$field] = $import_data_;
-                    $insert_with_status[$field] =$import_data_;
+                    $insert[$field] = trim($import_data_);
+                    $insert_with_status[$field] =trim($import_data_);
                     if ($getfieldDetails->type == "integer") {
                         if (!is_numeric($import_data_)) {
                             $status = ImportConstant::NUMERIC_STATUS;

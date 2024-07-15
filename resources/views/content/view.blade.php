@@ -16,10 +16,11 @@
                     <div class=" mb-4 mt-2 d-flex justify-content-end align-items-center">
                         <div>
                             <button onclick="clearFilter()" id="clear-filter" class="btn btn-danger btn-sm" style="display:none"><span class="bi bi-x"></span> Clear Filter</button>
-
                             <button data-bs-toggle="modal" data-bs-target="#filter-modal" class="btn btn-outline-dark btn-sm"><span class="bi bi-funnel"></span> Filter</button>
-                         
-                            <button onclick="deleteSelectedRow()" id="delete-selected-row" disabled class="btn btn-outline-danger btn-sm"><span class="bi bi-trash"></span></button>
+                            @if ($user_privileges->delete == 1)
+                                <button onclick="deleteSelectedRow()" id="delete-selected-row" disabled class="btn btn-outline-danger btn-sm"><span class="bi bi-trash"></span></button>
+                            @endif
+                            
                         </div>
                     </div>
                     <table class="table" id="table" style="width:100%">
