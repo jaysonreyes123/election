@@ -7,9 +7,11 @@ use App\Helper\FieldHelper;
 use App\Helper\ModuleHelper;
 use App\Helper\ReportHelper;
 use App\Models\Report;
+use App\Models\ReportColumn;
 use App\Models\ReportFilter;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
@@ -23,7 +25,7 @@ class ReportController extends Controller
     }
     public function list()
     {
-        $model = Report::with(['module_', 'report_filters_'])->get();
+        $model = Report::with(['module_', 'report_filters_','report_columns_'])->where('type',"list")->get();
         return DataTables::of($model)
             ->addIndexColumn()
             ->addColumn("action", function ($item) {
@@ -54,10 +56,20 @@ class ReportController extends Controller
         }
         $model->tabid = $request->module;
         $model->name = $request->name;
-        $model->column = implode(",", $request->column);
+        $model->type = "list";
+        $model->user_id = Auth::id();
         $model->save();
         if ($model->save()) {
             $report_id = $model->id;
+            $report_column_model_check = ReportColumn::where("report_id",$report_id)->first();
+            $report_column_model = new ReportColumn();
+            if($report_column_model_check){
+                $report_column_model = ReportColumn::where("report_id",$report_id)->first();
+            }
+            $report_column_model->report_id = $report_id;
+            $report_column_model->column = implode(",",$request->column);
+            $report_column_model->save();
+
             ReportFilter::where('report_id', $report_id)->delete();
             if (isset($request->and_field)) {
                 foreach ($request->and_field as $key => $val) {
@@ -119,9 +131,9 @@ class ReportController extends Controller
     {
         $limit = 100;
         $moduleid = ModuleHelper::getModuleID($module);
-        $report_details = Report::with('report_filters_')->where('id', $id,)->where('tabid', $moduleid)->first();
-        $headers = explode(",", $report_details->column);
-        $report_model = $this->reportDetails($module, $report_details->column, $report_details->report_filters_, $limit);
+        $report_details = Report::with('report_filters_','report_columns_')->where('id', $id,)->where('tabid', $moduleid)->first();
+        $headers = explode(",", $report_details->report_columns_->column);
+        $report_model = $this->reportDetails($module, $report_details->report_columns_->column, $report_details->report_filters_, $limit);
         return view('content.admin.report_view', compact(['module', 'report_details', 'id', 'headers', 'moduleid', 'report_model']));
     }
     public function reportDetails($module, $column, $filter, $limit = "")
