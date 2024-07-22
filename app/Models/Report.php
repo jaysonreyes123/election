@@ -17,4 +17,11 @@ class Report extends Model
     {
         return $this->hasMany(ReportFilter::class, 'report_id', 'id');
     }
+    public function report_columns_()
+    {
+        return $this->hasOne(ReportColumn::class, 'report_id', 'id');
+    }
+    public function dashboard_(){
+        return $this->hasOne(Dashboard::class, 'report_id', 'id');
+    }
 }

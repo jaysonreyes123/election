@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('tabid');
             $table->foreign('tabid')->references('id')->on('tabs');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('name')->nullable();
-            $table->text('column')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

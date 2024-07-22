@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BarangayMapController;
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardMaintenanceController;
 use App\Http\Controllers\FieldController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FilterController;
@@ -108,8 +109,13 @@ Route::group(["middleware" => 'auth'], function () {
 
     //dashboard
     Route::get("/dashboard/barangay", [DashboardController::class, 'barangay']);
+    Route::post("/dashboard/update_grid",[DashboardController::class,'update_grid']);
     Route::get("/dashboard/precinct/{barangay}", [DashboardController::class, 'precinct']);
     Route::get("/dashboard/precinct-pie/{barangay}", [DashboardController::class, 'precinct_piechart']);
+
+    //maintenannce dashboard
+    Route::get("dashboard/maintenance/list",[DashboardMaintenanceController::class,'list']);
+    Route::resource('dashboard/maintenance',DashboardMaintenanceController::class);
 
     //view
     Route::get("/view/module/{module}/", [ViewController::class, 'index']);

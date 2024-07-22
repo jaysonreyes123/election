@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Dashboardhelper;
+use App\Helper\ModuleHelper;
 use App\Helper\SqlHelper;
 use App\Models\Barangay;
+use App\Models\Dashboard;
 use App\Models\Precinct;
+use App\Models\Report;
 use App\Models\Voters;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -15,7 +21,39 @@ class DashboardController extends Controller
     {
         $barangay_model = Barangay::get();
         $precinct_model = Precinct::get();
-        return view('content.dashboard', compact(['barangay_model', 'precinct_model']));
+        $dashboard_model = Report::with(['report_filters_','dashboard_' => function($query){
+            return $query->where("pin",1);
+        }])
+        ->where("type","widget")
+        ->where("user_id",Auth::id())
+        ->get()
+        ->sortBy('dashboard_.sort');
+        $widget = "";
+        $output = [];
+        if(!$dashboard_model->isEmpty()){
+            foreach($dashboard_model as $dashboard){
+                if($dashboard->dashboard_){
+                    $module = ModuleHelper::getModuleName($dashboard->tabid);
+                    $table = ModuleHelper::getModuleTable($module);
+                    $filter = Dashboardhelper::Filter($table,$dashboard->report_filters_);
+                    $query = Dashboardhelper::dashboardQuery($module,$table,$dashboard->dashboard_->columnname,$dashboard->dashboard_->dashboard_type,$filter);
+                    $widget = $dashboard->dashboard_->dashboard_type == "count" ? DB::select($query)[0]->widget : number_format(DB::select($query)[0]->widget,2);
+                    $sub_output = [];
+                    $sub_output["id"] = $dashboard->id;
+                    $sub_output["name"] = $dashboard->name;
+                    $sub_output["widget"] = $widget;
+                    $sub_output["position"] = json_decode($dashboard->dashboard_->position,true);
+                    $output[] = $sub_output;
+                }
+            }   
+        }
+        return view('content.dashboard', compact(['output']));
+    }
+    public function update_grid(Request $request){
+        foreach($request->widget_id as $key => $widget_id){
+            $position = $request->widget_position[$key];
+            Dashboard::where("report_id",$widget_id)->update(["position" => $position , "sort" => $key ]);
+        }
     }
     public function barangay()
     {

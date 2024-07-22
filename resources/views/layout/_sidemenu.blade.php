@@ -7,6 +7,11 @@
           <span>Dashboard</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link {{$menu == "Dashboard Maintenance" ? "" : "collapsed"}}" href="/dashboard/maintenance">
+          <span>Dashboard Maintenance</span>
+        </a>
+      </li>
       <li class="nav-heading">Module</li>
         @foreach (\App\Models\Tab::where('status',1)->orderBy('sort','asc')->get() as $module )
           <li class="nav-item">

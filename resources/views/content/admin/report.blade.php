@@ -13,8 +13,8 @@
                         <table class="table hover pointer" id="report-table">
                             <thead>
                                 <tr>
-                                    <th>Report Name</th>
                                     <th>Module</th>
+                                    <th>Report Name</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -100,8 +100,9 @@
                 autoWitdth:false,
                 order:[],
                 columns:[
-                    {data:'name',name:'name'},
+                   
                     {data:'module_.name',name:'module_.name'},
+                    {data:'name',name:'name'},
                     {data:'action',name:'action'}
                 ]
             }) 
@@ -138,7 +139,8 @@
             const id = table.row(tr).data().id;
             const tabid = table.row(tr).data().tabid;
             const name = table.row(tr).data().name;
-            const columns = table.row(tr).data().column;
+            const columns = table.row(tr).data().report_columns_.column;
+           
             const column = columns.split(",");
             const filters = table.row(tr).data().report_filters_;
             $("input[name='name']").val(name);
