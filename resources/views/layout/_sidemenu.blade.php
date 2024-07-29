@@ -7,11 +7,6 @@
           <span>Dashboard</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link {{$menu == "Dashboard Maintenance" ? "" : "collapsed"}}" href="/dashboard/maintenance">
-          <span>Dashboard Maintenance</span>
-        </a>
-      </li>
       <li class="nav-heading">Module</li>
         @foreach (\App\Models\Tab::where('status',1)->orderBy('sort','asc')->get() as $module )
           <li class="nav-item">
@@ -42,7 +37,7 @@
           <span>Barangay Map</span>
         </a>
       </li>
-
+      
       @if (Auth::user()->role == 1)
       <li class="nav-heading">Admin</li>
       <li class="nav-item">
@@ -82,7 +77,7 @@
 
       <li class="nav-item">
         <a class="nav-link
-          @if ($menu != "Module" && $menu != "Fields")
+          @if ($menu != "Module" && $menu != "Fields" && $menu != "Dashboard Management")
             collapsed
           @endif
         " data-bs-target="#module-management" data-bs-toggle="collapse" href="#">
@@ -90,10 +85,15 @@
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="module-management" class="nav-content
-        @if ($menu != "Module" && $menu != "Fields")
+        @if ($menu != "Module" && $menu != "Fields" && $menu != "Dashboard Management" )
             collapse
         @endif
         " data-bs-parent="#sidebar-nav">
+          <li>
+            <a class="{{$menu == "Dashboard Management" ? "nav-link active " : "" }}" href="/dashboard/maintenance">
+              <span>Dashboard Management</span>
+            </a>
+          </li>
           <li >
             <a class="{{$menu == "Module" ? "nav-link active " : "" }}" href="/tab">
               <span>Module</span>

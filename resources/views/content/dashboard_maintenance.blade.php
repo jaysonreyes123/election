@@ -1,9 +1,9 @@
-@extends('layout._main',["title"=>"Dashboard Maintenance"])
+@extends('layout._main',["title"=>"Dashboard Management"])
 @section('content')
 <section class="section">
    <div class="row">
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <h4>Dashboard Maintenance</h4>
+            <h4>Dashboard Management</h4>
             <button data-bs-target="#dashboard-modal" data-bs-toggle="modal" class="btn btn-sm btn-primary">Add Dashboard</button>
         </div>
         <div class="col-lg-12 grid-margin col-xl-12 stretch-card">
@@ -158,6 +158,33 @@
             }
         })
 
+    })
+
+    $("#dashboard-table").on('click','.delete',function(){
+
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+        if (result.isConfirmed) {
+            const tr = $(this).closest('tr');
+            const data = table.row(tr).data();
+            $("#loader").show();
+            $.ajax({
+                url:"/dashboard/maintenance/"+data.id,
+                method:"delete",
+                success:function(data){
+                    $("#dashboard-table").DataTable().ajax.reload();
+                    $("#loader").hide();
+                }
+            })
+        }
+        });
     })
     $("#dashboard-table").on('click','.edit',function(){
         const tr = $(this).closest('tr');

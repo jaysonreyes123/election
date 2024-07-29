@@ -31,6 +31,7 @@ class DashboardMaintenanceController extends Controller
                 return "
                     $button
                     <a href='javascript:void(0)' class='edit' style='margin-left:20px' ><span class='bi bi-pen-fill text-warning'></span></a>
+                    <a href='javascript:void(0)' title='delete' class='delete' style='margin-left:20px' ><span class='bi bi-trash text-danger'></span></a>
                     
                 ";
             })
@@ -143,5 +144,7 @@ class DashboardMaintenanceController extends Controller
     public function destroy(string $id)
     {
         //
+        Report::find($id)->delete();
+        return response()->json([],200);
     }
 }
