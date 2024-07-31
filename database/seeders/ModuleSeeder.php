@@ -15,24 +15,36 @@ class ModuleSeeder extends Seeder
     {
         //
         DB::table('tabs')->insert([
-            [
-                "name" => "Voters",
-                "label" => "Voters",
-                "status" => 1,
-                "sort"  => 1,
-            ],
+            // [
+            //     "name" => "Voters",
+            //     "label" => "Voters",
+            //     "status" => 1,
+            //     "sort"  => 1,
+            // ],
             [
                 "name" => "Barangays",
                 "label" => "Barangays",
                 "status" => 1,
-                "sort" => 2
+                "sort" => 1
+            ],
+            [
+                "name" => "Street",
+                "label" => "Street",
+                "status" => 1,
+                "sort"   => 2
+            ],
+            [
+                "name" => "Leaders",
+                "label" => "Leaders",
+                "status" => 1,
+                "sort"   => 3
             ],
             [
                 "name" => "Precinct",
                 "label" => "Precinct",
                 "status" => 1,
-                "sort"   => 3
-            ]
+                "sort"   => 4
+            ],
         ]);
     }
 }

@@ -60,14 +60,14 @@ class ReportHelper
             $and == "()" ? $and = "" : $and = $and;
             $or == "()" ? $or = "" : $or = $or;
             $and_between = $and != "" && $or != "" ? "and" : "";
-            $condition = " where $and $and_between $or";
+            $condition = " where is_delete = 0 and $and $and_between $or";
         }
         return $condition;
     }
 
     public static function reportQuery($table, $column, $filter, $limit = "")
     {
-        $query = " SELECT $column from $table $filter  ";
+        $query = " SELECT $column from $table $filter ";
 
         if ($limit != "") {
             $query .= " limit $limit";

@@ -34,7 +34,7 @@ class LeadersController extends Controller
     public function show(string $id)
     {
         //
-        $model = Leaders::where('barangay',$id)->first();
+        $model = Leaders::where('barangay_name',$id)->where('is_delete',0)->first();
         $module_id = ModuleHelper::getModuleID('Leaders');
         $fields = [];
         if($model != ""){
@@ -49,7 +49,7 @@ class LeadersController extends Controller
             }
         }
         
-        $model2 = Barangay::where('name',$id)->first();
+        $model2 = Barangay::where('name',$id)->where('is_delete',0)->first();
         $module_id2 = ModuleHelper::getModuleID('Barangays');
         $fields2 = [];
         $image = "";

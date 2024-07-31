@@ -28,9 +28,8 @@
     }
 </style>
 <h2>Barangay Map Report</h2>
-@if ($barangay_map != ""){
+@if ($barangay_map != "")
     <center><img class="barangay_map_image" src="{{public_path("attachment/".$barangay_map)}}" alt=""></center>
-}    
 @endif
 
 @if (!empty($table1))
