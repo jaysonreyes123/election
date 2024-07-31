@@ -106,15 +106,15 @@ class ReportController extends Controller
     {
 
         $moduleid = ModuleHelper::getModuleID($module);
-        $report_details = Report::where('id', $id,)->where('tabid', $moduleid)->first();
-        $headers = explode(",", $report_details->column);
-
+        $report_details = Report::where('id', $id)->where('tabid', $moduleid)->first();
+        $headers = explode(",", $report_details->report_columns_->column);
         $header_label = array();
         foreach ($headers as $header) {
             $header_helper = FieldHelper::getSingleFieldModule($moduleid, $header);
+            
             $header_label[] = $header_helper->label;
         }
-        $report_model = $this->reportDetails($module, $report_details->column, $report_details->report_filters_);
+        $report_model = $this->reportDetails($module, $report_details->report_columns_->column, $report_details->report_filters_);
 
         if ($extenstion == "pdf") {
             $pdf = Pdf::loadView('content.admin.report.report', [
