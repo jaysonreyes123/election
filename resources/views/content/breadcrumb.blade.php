@@ -24,6 +24,15 @@
         @if ($user_privileges->edit == 1)
             <a href="/edit/module/{{$module}}/{{$id}}"  class="btn btn-default border px-4 bg-white shadow shadow-sm"> <span class="bi bi-pen"></span> Edit</a>
         @endif
+        
+        @if ($moduleid == 1)
+        @php
+          $module_key = \App\Helper\ModuleHelper::getModuleKey($module);
+          $barangay_model = \App\Models\Barangay::where($module_key,$id)->first();
+        @endphp
+        <a title='Print' href='javascript:void(0)'class="btn btn-default border px-4 bg-white shadow shadow-sm" data-value="{{$barangay_model->name}}" id="print-barangay" ><span class='bi bi-file-earmark text-success p-2'></span>Print report map</a>
+        @endif
+        
         {{-- @if ($user_privileges->import == 1)
             <button data-bs-target="#import-modal" data-bs-toggle="modal" class="btn btn-default border px-4 bg-white shadow shadow-sm"><span class="bi bi-upload"></span> Import</button>
         @endif --}}

@@ -77,7 +77,7 @@
 
       <li class="nav-item">
         <a class="nav-link
-          @if ($menu != "Module" && $menu != "Fields" && $menu != "Dashboard Management")
+          @if ($menu != "Module" && $menu != "Fields")
             collapsed
           @endif
         " data-bs-target="#module-management" data-bs-toggle="collapse" href="#">
@@ -85,15 +85,15 @@
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="module-management" class="nav-content
-        @if ($menu != "Module" && $menu != "Fields" && $menu != "Dashboard Management" )
+        @if ($menu != "Module" && $menu != "Fields"  )
             collapse
         @endif
         " data-bs-parent="#sidebar-nav">
-          <li>
+          {{-- <li>
             <a class="{{$menu == "Dashboard Management" ? "nav-link active " : "" }}" href="/dashboard/maintenance">
               <span>Dashboard Management</span>
             </a>
-          </li>
+          </li> --}}
           <li >
             <a class="{{$menu == "Module" ? "nav-link active " : "" }}" href="/tab">
               <span>Module</span>
@@ -105,6 +105,12 @@
             </a>
           </li>
         </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link {{$menu == "Dashboard Management" ? "" : "collapsed"}}" href="/dashboard/maintenance">
+          <span>Dashboard Management</span>
+        </a>
       </li>
 
       <li class="nav-item">

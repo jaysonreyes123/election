@@ -74,7 +74,7 @@
         </div>
     </div>
 </div>
-@include('compontent.print')
+{{-- @include('compontent.print') --}}
 @push('script')
     <script>
         var fields = @json($field_column);
@@ -120,6 +120,10 @@
                         'render': function (data, type, full, meta){
                             return '<input type="checkbox" style="cursor:pointer" class="checkbox form-check-input" name="id[]" value="' + $('<div/>').text(data).html() + '">';
                         }
+                    },
+                    {
+                        'targets':'action:name',
+                        'width':"150"
                     }
                 ]
             });

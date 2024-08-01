@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id('barangaysid');
             $table->integer('is_delete')->default(0);
             $table->string('name')->nullable();
-            $table->string('city')->nullable();
+            $table->string('map_image')->nullable();
+            $table->integer('total_number_streets')->nullable();
+            $table->integer('total_number_population')->nullable();
+            $table->integer('total_number_registered_voters')->nullable();
             $table->timestamps();
         });
     }

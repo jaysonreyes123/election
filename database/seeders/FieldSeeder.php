@@ -109,7 +109,7 @@ class FieldSeeder extends Seeder
                 "table" => "barangays_table",
                 "columnname" => "name",
                 "tabid" => 1,
-                "label" => "Name",
+                "label" => "Barangay",
                 "type" => "text",
                 "datatype" => "varchar",
                 "blockid" => 1,
@@ -119,12 +119,51 @@ class FieldSeeder extends Seeder
             ],
             [
                 "table" => "barangays_table",
-                "columnname" => "city",
+                "columnname" => "map_image",
                 "tabid" => 1,
-                "label" => "City",
-                "type" => "text",
+                "label" => "Map Image",
+                "type" => "file",
                 "datatype" => "varchar",
                 "blockid" => 1,
+                "mandatory" => 1,
+                "column" => 1,
+                "editable" => 1
+            ],
+
+            [
+                "table" => "barangays_table",
+                "columnname" => "total_number_streets",
+                "tabid" => 1,
+                "label" => "Total Number of Streets",
+                "type" => "integer",
+                "datatype" => "int",
+                "blockid" => 5,
+                "mandatory" => 1,
+                "column" => 1,
+                "editable" => 1
+            ],
+
+            [
+                "table" => "barangays_table",
+                "columnname" => "total_number_population",
+                "tabid" => 1,
+                "label" => "Total Number of Population",
+                "type" => "integer",
+                "datatype" => "int",
+                "blockid" => 5,
+                "mandatory" => 1,
+                "column" => 1,
+                "editable" => 1
+            ],
+
+            [
+                "table" => "barangays_table",
+                "columnname" => "total_number_registered_voters",
+                "tabid" => 1,
+                "label" => "Total Number of Registered Voters",
+                "type" => "integer",
+                "datatype" => "int",
+                "blockid" => 5,
                 "mandatory" => 1,
                 "column" => 1,
                 "editable" => 1

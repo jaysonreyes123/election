@@ -60,4 +60,15 @@
         </div>
         @endforeach
     </section>
+@include('compontent.print')
+@push('script')
+<script>
+    $("#print-barangay").click(function(){
+        const barangay_name = $(this).data('value');
+        $("#barangay-print-name").text(barangay_name);
+        document.getElementById('viewer').src="/leaders/"+barangay_name;
+        $("#barangay-print-modal").modal('show');
+    })
+</script>
+@endpush
 @endsection

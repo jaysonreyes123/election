@@ -131,7 +131,7 @@
                     <input type="checkbox" id="column" name="column" class="form-check-input">
                 </div>
                 <div class="form-check mb-2">
-                    <label for="presence" class="form-check-label">Disply field</label>
+                    <label for="presence" class="form-check-label">Display field</label>
                     <input type="checkbox" id="presence" name="presence" class="form-check-input">
                 </div>
             </div>
