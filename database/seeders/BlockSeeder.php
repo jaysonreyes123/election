@@ -21,14 +21,12 @@ class BlockSeeder extends Seeder
             $block_model->name = $model->name . " Details";
             $block_model->tabid = $model->id;
             $block_model->save();
-
-            if($model->id == 1){
-                $block_model = new Block;
-                $block_model->id = 5;
-                $block_model->name = "Demographics";
-                $block_model->tabid = 1;
-                $block_model->save();
-            }
         }
+
+        $block_model = new Block;
+        $block_model->id = 5;
+        $block_model->name = "Demographics";
+        $block_model->tabid = 1;
+        $block_model->save();
     }
 }
