@@ -294,7 +294,7 @@
                             $("input[name='presence']").prop('checked',presence_value);
                             $("#field_id").val($("#"+id+"_id").val())
                             $("select[name='data_type']").prop('disabled',true);
-                            // $("input[name='default_value']").prop('readonly',true);
+                            $("input[name='default_value']").prop('readonly',true);
                             $("input[name='decimals']").prop('readonly',true);
 
                             $("#field-modal").modal('show');
